@@ -49,7 +49,7 @@ export class NavbarComponent implements OnInit{
                 return this.mapping[titlee];
             }
         }
-        return 'Test';
+        return 'Exam';
     }
     sidebarToggle(){
         var toggleButton = this.toggleButton;
