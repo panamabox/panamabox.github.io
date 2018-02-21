@@ -6,6 +6,7 @@ import { Tarea3Component }   from './tarea3/tarea3.component';
 import { Tarea4Component }   from './tarea4/tarea4.component';
 import { Tarea5Component }   from './tarea5/tarea5.component';
 import { ExamComponent }   from './exam/exam.component';
+import { ResultComponent }   from './result/result.component';
 
 export const AppRoutes: Routes = [
     {
@@ -36,5 +37,9 @@ export const AppRoutes: Routes = [
     {
         path: 'exam',
         component: ExamComponent
+    },
+    {
+        path: 'result',
+        component: ResultComponent
     }
 ]

@@ -38,6 +38,7 @@ export class NavbarComponent implements OnInit{
             "tarea4": "Tarea 4",
             "tarea5": "Tarea 5",
             "exam": "Exam",
+            "result": "Resultado"
         }
     }
     getTitle(){
@@ -54,7 +55,7 @@ export class NavbarComponent implements OnInit{
         var toggleButton = this.toggleButton;
         var body = document.getElementsByTagName('body')[0];
 
-        if(this.sidebarVisible == false){
+        if(!this.toggleButton.classList.contains('toggled')) {
             setTimeout(function(){
                 toggleButton.classList.add('toggled');
             },500);

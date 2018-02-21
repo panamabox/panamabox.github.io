@@ -10,8 +10,6 @@ export class Tarea2Component implements OnInit{
     private questions: any[];
     private currentQuestion;
     private nativeElement: Node;
-    private okButton;
-    private nextButton;
     private currentIndex;
     
     constructor(private renderer : Renderer, private element : ElementRef) {
@@ -19,10 +17,6 @@ export class Tarea2Component implements OnInit{
     }
     
     ngOnInit(){
-        var q : HTMLElement = this.element.nativeElement;
-        this.okButton = q.getElementsByClassName('btn-ok')[0];
-        this.nextButton = q.getElementsByClassName('btn-next')[0];
-        
         this.questions = [
             {
                 question: 'La mayoría de edad en España es a los 16 años.',
@@ -584,7 +578,6 @@ export class Tarea2Component implements OnInit{
                 var optionButton = q.getElementsByClassName(option.id)[0];
                 
                 if(optionButton.classList.contains('active')) {
-                    console.log("in 2");
                     optionButton.classList.remove('btn-default');
                     optionButton.classList.add('btn-danger');
                     optionButton.classList.add('btn-fill');

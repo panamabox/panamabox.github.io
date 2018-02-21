@@ -13,6 +13,7 @@ import { Tarea3Component }   from './tarea3/tarea3.component';
 import { Tarea4Component }   from './tarea4/tarea4.component';
 import { Tarea5Component }   from './tarea5/tarea5.component';
 import { ExamComponent }   from './exam/exam.component';
+import { ResultComponent }   from './result/result.component';
 
 import { HttpModule } from '@angular/http';
 
@@ -24,7 +25,8 @@ import { HttpModule } from '@angular/http';
     Tarea3Component,
     Tarea4Component,
     Tarea5Component,
-    ExamComponent
+    ExamComponent,
+    ResultComponent
   ],
   imports: [
     BrowserModule,

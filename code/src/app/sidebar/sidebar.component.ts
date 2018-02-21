@@ -10,7 +10,6 @@ export interface RouteInfo {
 }
 
 export const ROUTES: RouteInfo[] = [
-    { path: 'dashboard', title: 'Home',  icon: 'ti-direction-alt', class: '' },
     { path: 'tarea1', title: 'Tarea 1',  icon:'ti-pencil-alt2', class: '' },
     { path: 'tarea2', title: 'Tarea 2',  icon:'ti-pencil-alt2', class: '' },
     { path: 'tarea3', title: 'Tarea 3',  icon:'ti-pencil-alt2', class: '' },
