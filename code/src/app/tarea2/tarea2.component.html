@@ -1,0 +1,19 @@
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="header">
+                        <h5 class="title">{{currentQuestion.question}}</h5>
+                    </div>
+                    <div *ngFor="let option of currentQuestion.options">
+                        <div class="content">
+                            <button class="btn btn-default" [ngClass]="option.id" data-toggle="button">{{option.answer}}</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-warning" (click)="okClick()">OK</button>
+                <button class="btn btn-warning" (click)="nextClick()">Siguiente</button>
+            </div>
+        </div>
+    </div>

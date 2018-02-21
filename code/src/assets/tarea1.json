@@ -1,0 +1,42 @@
+[
+    {
+        "question": "La forma política del Estado español es la...",
+        "options": [
+            {
+                "id": "btn-1",
+                "answer": "monarquía parlamentaria",
+                "correct": true
+            },
+            {
+                "id": "btn-2",
+                "answer": "república federal",
+                "correct": false
+            },
+            {
+                "id": "btn-3",
+                "answer": "monarquía federal",
+                "correct": false
+            }
+        ]
+    },
+    {
+        "question": "Según la Constitución española, la soberanía nacional reside en el pueblo, del que proceden...",
+        "options": [
+            {
+                "id": "btn-1",
+                "answer": "las leyes orgánicas del Estado",
+                "correct": false
+            },
+            {
+                "id": "btn-2",
+                "answer": "los estatutos de autonomía",
+                "correct": false
+            },
+            {
+                "id": "btn-3",
+                "answer": "los poderes del Estado",
+                "correct": true
+            }
+        ]
+    }
+]
