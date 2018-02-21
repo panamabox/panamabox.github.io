@@ -29,12 +29,11 @@
                     </div>
                     <div *ngFor="let option of currentQuestion.options">
                         <div class="content">
-                            <button class="btn btn-default" [ngClass]="option.id" data-toggle="button">{{option.answer}}</button>
+                            <button class="btn btn-default" [ngClass]="option.id" data-toggle="button" (click)="okClick(option)" style="white-space: normal;">{{option.answer}}</button>
                         </div>
                     </div>
                 </div>
                 
-                <button class="btn btn-warning" (click)="okClick()">OK</button>
                 <button class="btn btn-warning" (click)="nextClick()">Siguiente</button>
             </div>
         </div>

@@ -207,7 +207,7 @@ var AppRoutes = [
 /***/ "../../../../../src/app/exam/exam.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-lg-3 col-sm-6\">\n                <div class=\"card\">\n                    <div class=\"content\">\n                        <div class=\"row\">\n                            <div class=\"col-xs-5\">\n                                <div class=\"icon-big icon-warning text-center\">\n                                    <i class=\"ti-cup\"></i>\n                                </div>\n                            </div>\n                            <div class=\"col-xs-7\">\n                                <div class=\"numbers\">\n                                    <p>Respuestas</p>\n                                    {{currentIndex}}/{{examQuestions.length}}\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        \n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h5 class=\"title\">{{currentQuestion.question}}</h5>\n                    </div>\n                    <div *ngFor=\"let option of currentQuestion.options\">\n                        <div class=\"content\">\n                            <button class=\"btn btn-default\" [ngClass]=\"option.id\" data-toggle=\"button\">{{option.answer}}</button>\n                        </div>\n                    </div>\n                </div>\n                \n                <button class=\"btn btn-warning\" (click)=\"okClick()\">OK</button>\n                <button class=\"btn btn-warning\" (click)=\"nextClick()\">Siguiente</button>\n            </div>\n        </div>\n    </div>\n"
+module.exports = "    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-lg-3 col-sm-6\">\n                <div class=\"card\">\n                    <div class=\"content\">\n                        <div class=\"row\">\n                            <div class=\"col-xs-5\">\n                                <div class=\"icon-big icon-warning text-center\">\n                                    <i class=\"ti-cup\"></i>\n                                </div>\n                            </div>\n                            <div class=\"col-xs-7\">\n                                <div class=\"numbers\">\n                                    <p>Respuestas</p>\n                                    {{currentIndex}}/{{examQuestions.length}}\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n        \n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h5 class=\"title\">{{currentQuestion.question}}</h5>\n                    </div>\n                    <div *ngFor=\"let option of currentQuestion.options\">\n                        <div class=\"content\">\n                            <button class=\"btn btn-default\" [ngClass]=\"option.id\" data-toggle=\"button\" (click)=\"okClick(option)\" style=\"white-space: normal;\">{{option.answer}}</button>\n                        </div>\n                    </div>\n                </div>\n                \n                <button class=\"btn btn-warning\" (click)=\"nextClick()\">Siguiente</button>\n            </div>\n        </div>\n    </div>\n"
 
 /***/ }),
 
@@ -6072,27 +6072,27 @@ var ExamComponent = (function () {
         this.shuffle();
         this.currentQuestion = this.examQuestions[0];
     };
-    ExamComponent.prototype.okClick = function () {
-        var _this = this;
+    ExamComponent.prototype.okClick = function (option) {
         var q = this.element.nativeElement;
+        var optionButton = q.getElementsByClassName(option.id)[0];
+        if (option.correct) {
+            this.correctAnswres = this.correctAnswres + 1;
+            console.log("correct");
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-success');
+            optionButton.classList.add('btn-fill');
+        }
+        else {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-danger');
+            optionButton.classList.add('btn-fill');
+        }
         this.currentQuestion.options.map(function (option) {
             if (option.correct) {
                 var optionButton = q.getElementsByClassName(option.id)[0];
-                if (optionButton.classList.contains('active')) {
-                    _this.correctAnswres = _this.correctAnswres + 1;
-                    console.log("correct");
-                }
                 optionButton.classList.remove('btn-default');
                 optionButton.classList.add('btn-success');
                 optionButton.classList.add('btn-fill');
-            }
-            else {
-                var optionButton = q.getElementsByClassName(option.id)[0];
-                if (optionButton.classList.contains('active')) {
-                    optionButton.classList.remove('btn-default');
-                    optionButton.classList.add('btn-danger');
-                    optionButton.classList.add('btn-fill');
-                }
             }
         });
     };
@@ -6463,7 +6463,7 @@ SidebarModule = __decorate([
 /***/ "../../../../../src/app/tarea1/tarea1.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h5 class=\"title\">{{currentQuestion.question}}</h5>\n                    </div>\n                    <div *ngFor=\"let option of currentQuestion.options\">\n                        <div class=\"content\">\n                            <button class=\"btn btn-default\" [ngClass]=\"option.id\" data-toggle=\"button\">{{option.answer}}</button>\n                        </div>\n                    </div>\n                </div>\n                \n                <button class=\"btn btn-warning\" (click)=\"okClick()\">OK</button>\n                <button class=\"btn btn-warning\" (click)=\"nextClick()\">Siguiente</button>\n            </div>\n        </div>\n    </div>\n"
+module.exports = "    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h5 class=\"title\">{{currentQuestion.question}}</h5>\n                    </div>\n                    <div *ngFor=\"let option of currentQuestion.options\">\n                        <div class=\"content\">\n                            <button class=\"btn btn-default\" [ngClass]=\"option.id\" data-toggle=\"button\" (click)=\"okClick(option)\" style=\"white-space: normal;\">{{option.answer}}</button>\n                        </div>\n                    </div>\n                </div>\n                \n                <button class=\"btn btn-warning\" (click)=\"nextClick()\">Siguiente</button>\n            </div>\n        </div>\n    </div>\n"
 
 /***/ }),
 
@@ -8896,22 +8896,25 @@ var Tarea1Component = (function () {
         this.currentQuestion = this.questions[0];
         this.currentIndex = 0;
     };
-    Tarea1Component.prototype.okClick = function () {
+    Tarea1Component.prototype.okClick = function (option) {
         var q = this.element.nativeElement;
+        var optionButton = q.getElementsByClassName(option.id)[0];
+        if (option.correct) {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-success');
+            optionButton.classList.add('btn-fill');
+        }
+        else {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-danger');
+            optionButton.classList.add('btn-fill');
+        }
         this.currentQuestion.options.map(function (option) {
             if (option.correct) {
                 var optionButton = q.getElementsByClassName(option.id)[0];
                 optionButton.classList.remove('btn-default');
                 optionButton.classList.add('btn-success');
                 optionButton.classList.add('btn-fill');
-            }
-            else {
-                var optionButton = q.getElementsByClassName(option.id)[0];
-                if (optionButton.classList.contains('active')) {
-                    optionButton.classList.remove('btn-default');
-                    optionButton.classList.add('btn-danger');
-                    optionButton.classList.add('btn-fill');
-                }
             }
         });
     };
@@ -8953,7 +8956,7 @@ var _a, _b;
 /***/ "../../../../../src/app/tarea2/tarea2.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h5 class=\"title\">{{currentQuestion.question}}</h5>\n                    </div>\n                    <div *ngFor=\"let option of currentQuestion.options\">\n                        <div class=\"content\">\n                            <button class=\"btn btn-default\" [ngClass]=\"option.id\" data-toggle=\"button\">{{option.answer}}</button>\n                        </div>\n                    </div>\n                </div>\n                \n                <button class=\"btn btn-warning\" (click)=\"okClick()\">OK</button>\n                <button class=\"btn btn-warning\" (click)=\"nextClick()\">Siguiente</button>\n            </div>\n        </div>\n    </div>\n"
+module.exports = "    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h5 class=\"title\">{{currentQuestion.question}}</h5>\n                    </div>\n                    <div *ngFor=\"let option of currentQuestion.options\">\n                        <div class=\"content\">\n                            <button class=\"btn btn-default\" [ngClass]=\"option.id\" data-toggle=\"button\" (click)=\"okClick(option)\" style=\"white-space: normal;\">{{option.answer}}</button>\n                        </div>\n                    </div>\n                </div>\n                \n                <button class=\"btn btn-warning\" (click)=\"nextClick()\">Siguiente</button>\n            </div>\n        </div>\n    </div>\n"
 
 /***/ }),
 
@@ -9526,22 +9529,25 @@ var Tarea2Component = (function () {
         this.currentQuestion = this.questions[0];
         this.currentIndex = 0;
     };
-    Tarea2Component.prototype.okClick = function () {
+    Tarea2Component.prototype.okClick = function (option) {
         var q = this.element.nativeElement;
+        var optionButton = q.getElementsByClassName(option.id)[0];
+        if (option.correct) {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-success');
+            optionButton.classList.add('btn-fill');
+        }
+        else {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-danger');
+            optionButton.classList.add('btn-fill');
+        }
         this.currentQuestion.options.map(function (option) {
             if (option.correct) {
                 var optionButton = q.getElementsByClassName(option.id)[0];
                 optionButton.classList.remove('btn-default');
                 optionButton.classList.add('btn-success');
                 optionButton.classList.add('btn-fill');
-            }
-            else {
-                var optionButton = q.getElementsByClassName(option.id)[0];
-                if (optionButton.classList.contains('active')) {
-                    optionButton.classList.remove('btn-default');
-                    optionButton.classList.add('btn-danger');
-                    optionButton.classList.add('btn-fill');
-                }
             }
         });
     };
@@ -9583,7 +9589,7 @@ var _a, _b;
 /***/ "../../../../../src/app/tarea3/tarea3.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h5 class=\"title\">{{currentQuestion.question}}</h5>\n                    </div>\n                    <div *ngFor=\"let option of currentQuestion.options\">\n                        <div class=\"content\">\n                            <button class=\"btn btn-default\" [ngClass]=\"option.id\" data-toggle=\"button\">{{option.answer}}</button>\n                        </div>\n                    </div>\n                </div>\n                \n                <button class=\"btn btn-warning\" (click)=\"okClick()\">OK</button>\n                <button class=\"btn btn-warning\" (click)=\"nextClick()\">Siguiente</button>\n            </div>\n        </div>\n    </div>\n"
+module.exports = "    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h5 class=\"title\">{{currentQuestion.question}}</h5>\n                    </div>\n                    <div *ngFor=\"let option of currentQuestion.options\">\n                        <div class=\"content\">\n                            <button class=\"btn btn-default\" [ngClass]=\"option.id\" data-toggle=\"button\" (click)=\"okClick(option)\" style=\"white-space: normal;\">{{option.answer}}</button>\n                        </div>\n                    </div>\n                </div>\n                \n                <button class=\"btn btn-warning\" (click)=\"nextClick()\">Siguiente</button>\n            </div>\n        </div>\n    </div>\n"
 
 /***/ }),
 
@@ -10096,22 +10102,25 @@ var Tarea3Component = (function () {
         this.currentQuestion = this.questions[0];
         this.currentIndex = 0;
     };
-    Tarea3Component.prototype.okClick = function () {
+    Tarea3Component.prototype.okClick = function (option) {
         var q = this.element.nativeElement;
+        var optionButton = q.getElementsByClassName(option.id)[0];
+        if (option.correct) {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-success');
+            optionButton.classList.add('btn-fill');
+        }
+        else {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-danger');
+            optionButton.classList.add('btn-fill');
+        }
         this.currentQuestion.options.map(function (option) {
             if (option.correct) {
                 var optionButton = q.getElementsByClassName(option.id)[0];
                 optionButton.classList.remove('btn-default');
                 optionButton.classList.add('btn-success');
                 optionButton.classList.add('btn-fill');
-            }
-            else {
-                var optionButton = q.getElementsByClassName(option.id)[0];
-                if (optionButton.classList.contains('active')) {
-                    optionButton.classList.remove('btn-default');
-                    optionButton.classList.add('btn-danger');
-                    optionButton.classList.add('btn-fill');
-                }
             }
         });
     };
@@ -10153,7 +10162,7 @@ var _a, _b;
 /***/ "../../../../../src/app/tarea4/tarea4.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h5 class=\"title\">{{currentQuestion.question}}</h5>\n                    </div>\n                    <div *ngFor=\"let option of currentQuestion.options\">\n                        <div class=\"content\">\n                            <button class=\"btn btn-default\" [ngClass]=\"option.id\" data-toggle=\"button\">{{option.answer}}</button>\n                        </div>\n                    </div>\n                </div>\n                \n                <button class=\"btn btn-warning\" (click)=\"okClick()\">OK</button>\n                <button class=\"btn btn-warning\" (click)=\"nextClick()\">Siguiente</button>\n            </div>\n        </div>\n    </div>\n"
+module.exports = "    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h5 class=\"title\">{{currentQuestion.question}}</h5>\n                    </div>\n                    <div *ngFor=\"let option of currentQuestion.options\">\n                        <div class=\"content\">\n                            <button class=\"btn btn-default\" [ngClass]=\"option.id\" data-toggle=\"button\" (click)=\"okClick(option)\" style=\"white-space: normal;\">{{option.answer}}</button>\n                        </div>\n                    </div>\n                </div>\n                \n                <button class=\"btn btn-warning\" (click)=\"nextClick()\">Siguiente</button>\n            </div>\n        </div>\n    </div>\n"
 
 /***/ }),
 
@@ -10906,22 +10915,25 @@ var Tarea4Component = (function () {
         this.currentQuestion = this.questions[0];
         this.currentIndex = 0;
     };
-    Tarea4Component.prototype.okClick = function () {
+    Tarea4Component.prototype.okClick = function (option) {
         var q = this.element.nativeElement;
+        var optionButton = q.getElementsByClassName(option.id)[0];
+        if (option.correct) {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-success');
+            optionButton.classList.add('btn-fill');
+        }
+        else {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-danger');
+            optionButton.classList.add('btn-fill');
+        }
         this.currentQuestion.options.map(function (option) {
             if (option.correct) {
                 var optionButton = q.getElementsByClassName(option.id)[0];
                 optionButton.classList.remove('btn-default');
                 optionButton.classList.add('btn-success');
                 optionButton.classList.add('btn-fill');
-            }
-            else {
-                var optionButton = q.getElementsByClassName(option.id)[0];
-                if (optionButton.classList.contains('active')) {
-                    optionButton.classList.remove('btn-default');
-                    optionButton.classList.add('btn-danger');
-                    optionButton.classList.add('btn-fill');
-                }
             }
         });
     };
@@ -10963,7 +10975,7 @@ var _a, _b;
 /***/ "../../../../../src/app/tarea5/tarea5.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h5 class=\"title\">{{currentQuestion.question}}</h5>\n                    </div>\n                    <div *ngFor=\"let option of currentQuestion.options\">\n                        <div class=\"content\">\n                            <button class=\"btn btn-default\" [ngClass]=\"option.id\" data-toggle=\"button\">{{option.answer}}</button>\n                        </div>\n                    </div>\n                </div>\n                \n                <button class=\"btn btn-warning\" (click)=\"okClick()\">OK</button>\n                <button class=\"btn btn-warning\" (click)=\"nextClick()\">Siguiente</button>\n            </div>\n        </div>\n    </div>\n"
+module.exports = "    <div class=\"container-fluid\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                <div class=\"card\">\n                    <div class=\"header\">\n                        <h5 class=\"title\">{{currentQuestion.question}}</h5>\n                    </div>\n                    <div *ngFor=\"let option of currentQuestion.options\">\n                        <div class=\"content\">\n                            <button class=\"btn btn-default\" [ngClass]=\"option.id\" data-toggle=\"button\" (click)=\"okClick(option)\" style=\"white-space: normal;\">{{option.answer}}</button>\n                        </div>\n                    </div>\n                </div>\n                \n                <button class=\"btn btn-warning\" (click)=\"nextClick()\">Siguiente</button>\n            </div>\n        </div>\n    </div>\n"
 
 /***/ }),
 
@@ -12676,22 +12688,25 @@ var Tarea5Component = (function () {
         this.currentQuestion = this.questions[0];
         this.currentIndex = 0;
     };
-    Tarea5Component.prototype.okClick = function () {
+    Tarea5Component.prototype.okClick = function (option) {
         var q = this.element.nativeElement;
+        var optionButton = q.getElementsByClassName(option.id)[0];
+        if (option.correct) {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-success');
+            optionButton.classList.add('btn-fill');
+        }
+        else {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-danger');
+            optionButton.classList.add('btn-fill');
+        }
         this.currentQuestion.options.map(function (option) {
             if (option.correct) {
                 var optionButton = q.getElementsByClassName(option.id)[0];
                 optionButton.classList.remove('btn-default');
                 optionButton.classList.add('btn-success');
                 optionButton.classList.add('btn-fill');
-            }
-            else {
-                var optionButton = q.getElementsByClassName(option.id)[0];
-                if (optionButton.classList.contains('active')) {
-                    optionButton.classList.remove('btn-default');
-                    optionButton.classList.add('btn-danger');
-                    optionButton.classList.add('btn-fill');
-                }
             }
         });
     };

@@ -505,8 +505,20 @@ export class Tarea3Component implements OnInit{
         this.currentIndex = 0;
     }
     
-    okClick() {
+    okClick(option: any) {
         var q : HTMLElement = this.element.nativeElement;
+        var optionButton = q.getElementsByClassName(option.id)[0];
+        
+        if(option.correct) {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-success');
+            optionButton.classList.add('btn-fill');
+        } else {
+            optionButton.classList.remove('btn-default');
+            optionButton.classList.add('btn-danger');
+            optionButton.classList.add('btn-fill');
+        }
+        
         this.currentQuestion.options.map(option => {
             if(option.correct) {
                 var optionButton = q.getElementsByClassName(option.id)[0];
@@ -514,14 +526,6 @@ export class Tarea3Component implements OnInit{
                 optionButton.classList.remove('btn-default');
                 optionButton.classList.add('btn-success');
                 optionButton.classList.add('btn-fill');
-            } else {
-                var optionButton = q.getElementsByClassName(option.id)[0];
-                
-                if(optionButton.classList.contains('active')) {
-                    optionButton.classList.remove('btn-default');
-                    optionButton.classList.add('btn-danger');
-                    optionButton.classList.add('btn-fill');
-                }
             }
         });
     }
